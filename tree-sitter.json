@@ -1,0 +1,40 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "polar",
+      "camelcase": "Polar",
+      "title": "Polar",
+      "scope": "source.polar",
+      "file-types": [
+        "polar"
+      ],
+      "injection-regex": "^polar$",
+      "class-name": "TreeSitterPolar"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "OsoHq Polar grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "František Maša",
+        "email": "frantisekmasa1@gmail.com",
+        "url": "https://frantisekmasa.cz/"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/fmasa/tree-sitter-polar"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}

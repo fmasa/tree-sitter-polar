@@ -1,0 +1,134 @@
+================================
+Rule expression - without body
+================================
+
+some_fact();
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)))
+
+================================
+Rule expression - zero arguments
+================================
+
+some_fact(x) if some_other_fact();
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (rule_expression
+        name: (identifier))))
+
+=========================================
+Rule expression - boolean (true) argument
+=========================================
+
+some_fact(x) if some_other_fact(true);
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (rule_expression
+      name: (identifier)
+      argument: (bool_literal))))
+
+=========================================
+Rule expression - boolean (false) argument
+=========================================
+
+some_fact(x) if some_other_fact(false);
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (rule_expression
+      name: (identifier)
+      argument: (bool_literal))))
+
+
+===================================
+Rule expression - string argument
+===================================
+
+some_fact(x) if some_other_fact(x);
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (rule_expression
+      name: (identifier)
+      argument: (identifier))))
+
+
+===================================
+Rule expression - variable argument 
+===================================
+
+some_fact(x) if some_other_fact(x);
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (rule_expression
+      name: (identifier)
+      argument: (identifier))))
+
+
+===================================
+Rule expression - variable argument 
+===================================
+
+some_fact(x) if some_other_fact(x);
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (rule_expression
+      name: (identifier)
+      argument: (identifier))))
+
+=============================================
+Rule expression - variable argument with type 
+=============================================
+
+some_fact(x: String) if some_other_fact(x);
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier)
+      type: (identifier))
+    expression: (rule_expression
+      name: (identifier)
+      argument: (identifier))))
+

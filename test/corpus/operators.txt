@@ -1,0 +1,74 @@
+===================
+Equals Expression
+===================
+
+some_fact(x) if x = 1;
+
+---
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (binary_expression
+        left: (identifier)
+        operator: (comparison_operator)
+        right: (int_literal))))
+
+
+=======================
+Greater Than Expression
+=======================
+
+some_fact(x) if x > 10;
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (binary_expression
+        left: (identifier)
+        operator: (comparison_operator)
+        right: (int_literal))))
+
+
+==============================
+Greater Than Equals Expression
+==============================
+
+some_fact(x) if x >= 10;
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (binary_expression
+        left: (identifier)
+        operator: (comparison_operator)
+        right: (int_literal))))
+
+
+===========================
+Less Than Equals Expression
+===========================
+
+some_fact(x) if x <= 10;
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (binary_expression
+        left: (identifier)
+        operator: (comparison_operator)
+        right: (int_literal))))
+

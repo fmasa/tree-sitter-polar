@@ -1,0 +1,136 @@
+===================
+Zero parameter rule
+===================
+
+some_fact();
+
+---
+(source_file
+  (rule_definition
+    name: (identifier)))
+
+
+=============================
+Boolean (true) parameter rule
+=============================
+
+some_fact(true);
+
+---
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      literal: (bool_literal))))
+
+
+=============================
+Boolean (false) parameter rule
+=============================
+
+some_fact(false);
+
+---
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      literal: (bool_literal))))
+
+
+=======================
+Integer parameter rule
+=======================
+
+some_fact(42);
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      literal: (int_literal))))
+
+
+======================
+String parameter rule
+======================
+
+some_fact("hello");
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      literal: (string_literal))))
+
+
+======================
+Object parameter rule
+======================
+
+some_fact(Organization{"acme"});
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      literal: (object_literal
+        type: (identifier)
+        value: (string_literal)))))
+
+
+============================
+Untyped named parameter rule
+============================
+
+some_fact(some_variable);
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))))
+
+
+==========================
+Typed named parameter rule
+==========================
+
+some_fact(some_variable: String);
+
+---
+
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier)
+      type: (identifier))))
+
+
+========================
+Multiple parameters rule
+========================
+
+some_fact(true, 42, some_variable: User);
+
+---
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      literal: (bool_literal))
+    parameter: (parameter
+      literal: (int_literal))
+    parameter: (parameter
+      name: (identifier)
+      type: (identifier))))
+
