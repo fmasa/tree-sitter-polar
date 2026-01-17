@@ -1,0 +1,184 @@
+=====================
+Simple empty resource
+=====================
+
+resource Repository {}
+actor Repository {}
+global {}
+
+---
+
+(source_file
+  (resource_definition
+    name: (identifier))
+  (resource_definition
+    name: (identifier))
+  (resource_definition))
+
+
+================
+Resource extends
+================
+
+actor PrivateRepository extends Repository {}
+
+---
+
+(source_file
+  (resource_definition
+    name: (identifier)
+    supertype: (identifier)))
+
+
+==============
+Resource field
+==============
+
+resource Repository {
+  roles = ["owner", "collaborator", "viewer"];
+}
+
+---
+
+(source_file
+  (resource_definition
+    name: (identifier)
+    (resource_field
+      name: (identifier)
+      value: (string_array
+        (string)
+        (string)
+        (string)))))
+
+
+====================
+Resource permissions
+====================
+resource Repository {
+  permissions = ["admin", "write", "read"];
+}
+
+---
+
+(source_file
+  (resource_definition
+    name: (identifier)
+    (resource_field
+      name: (identifier)
+      value: (string_array
+        (string)
+        (string)
+        (string)))))
+
+========================================
+Resource permissions with trailing comma
+========================================
+resource Repository {
+  permissions = ["admin",];
+}
+
+---
+
+(source_file
+  (resource_definition
+    name: (identifier)
+    (resource_field
+      name: (identifier)
+      value: (string_array
+        (string)))))
+
+==================
+Resource relations
+==================
+
+resource Repository {
+  relations = { owner: User, organization: Organization };
+}
+
+---
+(source_file
+  (resource_definition
+    name: (identifier)
+    (resource_field
+      name: (identifier)
+      value: (relation_object
+        name: (identifier)
+        type: (identifier)
+        name: (identifier)
+        type: (identifier)))))
+
+
+======================================
+Resource relations with trailing comma
+======================================
+
+resource Repository {
+  relations = { owner: User, };
+}
+
+---
+
+(source_file
+  (resource_definition
+    name: (identifier)
+    (resource_field
+      name: (identifier)
+      value: (relation_object
+        name: (identifier)
+        type: (identifier)))))
+
+
+=====================
+Resource rules - role
+=====================
+
+resource Repository {
+  "edit" if "owner";
+}
+
+---
+
+(source_file
+  (resource_definition
+    name: (identifier)
+    (resource_rule
+      name: (string)
+      role_or_permission: (string))))
+
+
+=================================
+Resource rules - role on relation
+=================================
+
+resource Repository {
+  "edit" if "owner" on organization;
+}
+
+---
+
+(source_file
+  (resource_definition
+    name: (identifier)
+    (resource_rule
+      name: (string)
+      role_or_permission: (string)
+      relation: (identifier))))
+
+
+=================================
+Resource rules - rule
+=================================
+
+resource Repository {
+  "edit" if "owner" on organization;
+}
+
+---
+
+(source_file
+  (resource_definition
+    name: (identifier)
+    (resource_rule
+      name: (string)
+      role_or_permission: (string)
+      relation: (identifier))))

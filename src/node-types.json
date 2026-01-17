@@ -12,6 +12,10 @@
         "named": true
       },
       {
+        "type": "resource_definition",
+        "named": true
+      },
+      {
         "type": "rule_definition",
         "named": true
       },
@@ -26,11 +30,11 @@
     "named": true,
     "subtypes": [
       {
-        "type": "bool_literal",
+        "type": "bool",
         "named": true
       },
       {
-        "type": "int_literal",
+        "type": "int",
         "named": true
       },
       {
@@ -38,7 +42,7 @@
         "named": true
       },
       {
-        "type": "string_literal",
+        "type": "string",
         "named": true
       }
     ]
@@ -49,6 +53,10 @@
     "subtypes": [
       {
         "type": "binary_expression",
+        "named": true
+      },
+      {
+        "type": "paren_logical_expression",
         "named": true
       },
       {
@@ -139,19 +147,23 @@
         "types": [
           {
             "type": "and",
-            "named": false
+            "named": true
           },
           {
             "type": "comparison_operator",
             "named": true
           },
           {
+            "type": "in",
+            "named": true
+          },
+          {
             "type": "matches",
-            "named": false
+            "named": true
           },
           {
             "type": "or",
-            "named": false
+            "named": true
           }
         ]
       },
@@ -179,6 +191,16 @@
           }
         ]
       },
+      "values": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "literal_array",
+            "named": true
+          }
+        ]
+      },
       "variable": {
         "multiple": false,
         "required": false,
@@ -192,7 +214,7 @@
     }
   },
   {
-    "type": "bool_literal",
+    "type": "bool",
     "named": true,
     "fields": {}
   },
@@ -274,15 +296,34 @@
     }
   },
   {
+    "type": "literal_array",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "negation_expression",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "logical_expression",
+          "named": true
+        },
+        {
+          "type": "not",
           "named": true
         }
       ]
@@ -307,7 +348,7 @@
         "required": true,
         "types": [
           {
-            "type": "string_literal",
+            "type": "string",
             "named": true
           }
         ]
@@ -348,6 +389,172 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "paren_logical_expression",
+    "named": true,
+    "fields": {
+      "expression": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "rule_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "relation_object",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "resource_definition",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "supertype": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "resource_field",
+          "named": true
+        },
+        {
+          "type": "resource_rule",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "resource_field",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "relation_object",
+            "named": true
+          },
+          {
+            "type": "string_array",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "resource_rule",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "relation": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "role_or_permission": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "logical_expression",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -437,9 +644,24 @@
     }
   },
   {
-    "type": "string_literal",
+    "type": "string",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "string_array",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "test_definition",
@@ -450,7 +672,7 @@
         "required": true,
         "types": [
           {
-            "type": "string_literal",
+            "type": "string",
             "named": true
           }
         ]
@@ -539,6 +761,10 @@
     "named": false
   },
   {
+    "type": "[",
+    "named": false
+  },
+  {
     "type": "\\\"",
     "named": false
   },
@@ -547,8 +773,16 @@
     "named": false
   },
   {
-    "type": "and",
+    "type": "]",
     "named": false
+  },
+  {
+    "type": "actor",
+    "named": false
+  },
+  {
+    "type": "and",
+    "named": true
   },
   {
     "type": "assert",
@@ -556,6 +790,10 @@
   },
   {
     "type": "assert_not",
+    "named": false
+  },
+  {
+    "type": "extends",
     "named": false
   },
   {
@@ -567,6 +805,10 @@
     "named": false
   },
   {
+    "type": "global",
+    "named": false
+  },
+  {
     "type": "identifier",
     "named": true
   },
@@ -575,19 +817,31 @@
     "named": false
   },
   {
-    "type": "int_literal",
+    "type": "in",
+    "named": true
+  },
+  {
+    "type": "int",
     "named": true
   },
   {
     "type": "matches",
-    "named": false
+    "named": true
   },
   {
     "type": "not",
+    "named": true
+  },
+  {
+    "type": "on",
     "named": false
   },
   {
     "type": "or",
+    "named": true
+  },
+  {
+    "type": "resource",
     "named": false
   },
   {

@@ -10,25 +10,25 @@ test "owner has access" {
 ---
 (source_file
   (test_definition
-    name: (string_literal)
+    name: (string)
     (assert
       (rule_expression
         name: (identifier)
         argument: (object_literal
           type: (identifier)
-          value: (string_literal))
+          value: (string))
         argument: (object_literal
           type: (identifier)
-          value: (string_literal))))
+          value: (string))))
     (assert_not
       (rule_expression
         name: (identifier)
         argument: (object_literal
           type: (identifier)
-          value: (string_literal))
+          value: (string))
         argument: (object_literal
           type: (identifier)
-          value: (string_literal))))))
+          value: (string))))))
 
 
 ===============
@@ -46,7 +46,7 @@ test "owner has access" {
 ---
 (source_file
   (test_definition
-    name: (string_literal)
+    name: (string)
     (test_setup
       (fixture_reference
         name: (identifier))
@@ -55,16 +55,16 @@ test "owner has access" {
         parameter: (parameter
           literal: (object_literal
             type: (identifier)
-            value: (string_literal)))))
+            value: (string)))))
     (assert
       (rule_expression
         name: (identifier)
         argument: (object_literal
           type: (identifier)
-          value: (string_literal))
+          value: (string))
         argument: (object_literal
           type: (identifier)
-          value: (string_literal))))))
+          value: (string))))))
 
 ==================
 Fixture definition
@@ -84,14 +84,14 @@ test fixture repository_exists {
       parameter: (parameter
         literal: (object_literal
           type: (identifier)
-          value: (string_literal))))
+          value: (string))))
     (fact_definition
       name: (identifier)
       parameter: (parameter
         literal: (object_literal
           type: (identifier)
-          value: (string_literal)))
+          value: (string)))
       parameter: (parameter
         literal: (object_literal
           type: (identifier)
-          value: (string_literal))))))
+          value: (string))))))

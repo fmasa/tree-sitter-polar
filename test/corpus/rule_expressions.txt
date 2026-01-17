@@ -41,7 +41,7 @@ some_fact(x) if some_other_fact(true);
       name: (identifier))
     expression: (rule_expression
       name: (identifier)
-      argument: (bool_literal))))
+      argument: (bool))))
 
 =========================================
 Rule expression - boolean (false) argument
@@ -58,7 +58,7 @@ some_rule(x) if some_other_fact(false);
       name: (identifier))
     expression: (rule_expression
       name: (identifier)
-      argument: (bool_literal))))
+      argument: (bool))))
 
 
 ===================================
@@ -132,3 +132,36 @@ some_rule(x: String) if some_other_fact(x);
       name: (identifier)
       argument: (identifier))))
 
+
+========================
+Rule expression - parens
+========================
+
+some_rule(x) if (fact_a(x) or fact_b(x)) and (fact_c(x) or fact_d(x));
+
+---
+(source_file
+  (rule_definition
+    name: (identifier)
+    parameter: (parameter
+      name: (identifier))
+    expression: (binary_expression
+      left: (paren_logical_expression
+        expression: (binary_expression
+          left: (rule_expression
+            name: (identifier)
+            argument: (identifier))
+          operator: (or)
+          right: (rule_expression
+            name: (identifier)
+            argument: (identifier))))
+      operator: (and)
+      right: (paren_logical_expression
+        expression: (binary_expression
+          left: (rule_expression
+            name: (identifier)
+            argument: (identifier))
+          operator: (or)
+          right: (rule_expression
+            name: (identifier)
+            argument: (identifier)))))))

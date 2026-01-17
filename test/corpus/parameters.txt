@@ -21,7 +21,7 @@ some_fact(true);
   (fact_definition
     name: (identifier)
     parameter: (parameter
-      literal: (bool_literal))))
+      literal: (bool))))
 
 
 =============================
@@ -35,7 +35,7 @@ some_fact(false);
   (fact_definition
     name: (identifier)
     parameter: (parameter
-      literal: (bool_literal))))
+      literal: (bool))))
 
 
 =======================
@@ -50,7 +50,7 @@ some_fact(42);
   (fact_definition
     name: (identifier)
     parameter: (parameter
-      literal: (int_literal))))
+      literal: (int))))
 
 
 ======================
@@ -65,7 +65,7 @@ some_fact("hello");
   (fact_definition
     name: (identifier)
     parameter: (parameter
-      literal: (string_literal))))
+      literal: (string))))
 
 
 ======================
@@ -82,7 +82,7 @@ some_fact(Organization{"acme"});
     parameter: (parameter
       literal: (object_literal
         type: (identifier)
-        value: (string_literal)))))
+        value: (string)))))
 
 
 ============================
@@ -127,9 +127,9 @@ some_fact(true, 42, some_variable: User);
   (fact_definition
     name: (identifier)
     parameter: (parameter
-      literal: (bool_literal))
+      literal: (bool))
     parameter: (parameter
-      literal: (int_literal))
+      literal: (int))
     parameter: (parameter
       name: (identifier)
       type: (identifier))))

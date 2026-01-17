@@ -20,6 +20,7 @@ module.exports = grammar({
       $.fact_definition,
       $.fixture_definition,
       $.test_definition,
+      $.resource_definition,
     ),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
@@ -46,11 +47,13 @@ module.exports = grammar({
       // literal parameter
       field('literal', $.literal),
     ),
-    logical_expression: $ => choice(
+    _logical_expression: $ => choice(
       $.binary_expression,
       $.unary_expression,
       $.rule_expression,
     ),
+    paren_logical_expression: $ => seq('(', field('expression', $._logical_expression), ')'),
+    logical_expression: $ => choice($._logical_expression, $.paren_logical_expression,),
     rule_expression: $ => seq(
       field('name', $.identifier),
       '(',
@@ -58,36 +61,46 @@ module.exports = grammar({
       ')',
     ),
     comparison_operator: $ => choice('>', '<', '>=', '<=', '='),
+    and: $ => 'and',
+    or: $ => 'or',
+    matches: $ => 'matches',
+    not: $ => 'not',
+    in: $ => 'in',
     binary_expression: $ => choice(
       seq(
         field('variable', $.identifier),
-        field('operator', 'matches'),
+        field('operator', $.matches),
         field('type', $.identifier)
+      ),
+      seq(
+        field('variable', $.identifier),
+        field('operator', $.in),
+        field('values', $.literal_array),
       ),
       seq(
         field('left', $.value),
         field('operator', $.comparison_operator),
         field('right', $.value)
       ),
-      prec.left(2, seq(field('left', $.logical_expression), field('operator', 'and'), field('right', $.logical_expression))),
-      prec.left(1, seq(field('left', $.logical_expression), field('operator', 'or'), field('right', $.logical_expression))),
+      prec.left(2, seq(field('left', $.logical_expression), field('operator', $.and), field('right', $.logical_expression))),
+      prec.left(1, seq(field('left', $.logical_expression), field('operator', $.or), field('right', $.logical_expression))),
     ),
-    negation_expression: $ => prec(3, seq('not', $.logical_expression)),
+    negation_expression: $ => prec(3, seq($.not, $.logical_expression)),
     unary_expression: $ => choice($.negation_expression),
     value: $ => choice(
       $.literal,
       $.identifier,
     ),
     literal: $ => choice(
-      $.int_literal,
-      $.bool_literal,
-      $.string_literal,
+      $.int,
+      $.bool,
+      $.string,
       $.object_literal,
     ),
-    int_literal: $ => /-?\d+/,
-    bool_literal: $ => choice('true', 'false'),
-    object_literal: $ => seq(field('type', $.identifier), '{', field('value', $.string_literal), '}'),
-    string_literal: $ => seq('"',
+    int: $ => /-?\d+/,
+    bool: $ => choice('true', 'false'),
+    object_literal: $ => seq(field('type', $.identifier), '{', field('value', $.string), '}'),
+    string: $ => seq('"',
       repeat(choice('\\\\', '\\"', /[^"]/)),
       '"',
     ),
@@ -116,12 +129,105 @@ module.exports = grammar({
     assert_not: $ => seq('assert_not', $.rule_expression, ';'),
     test_definition: $ => seq(
       "test",
-      field("name", $.string_literal),
+      field("name", $.string),
       '{',
       optional($.test_setup),
       repeat1(choice($.assert, $.assert_not)),
       '}',
-    )
+    ),
+    string_array: $ => seq(
+      '[',
+      optional(
+        seq(
+          $.string,
+          repeat(
+            seq(
+              ',',
+              $.string,
+            ),
+          ),
+          optional(','),
+        ),
+      ),
+      ']',
+    ),
+    literal_array: $ => seq(
+      '[',
+      optional(
+        seq(
+          $.literal,
+          repeat(
+            seq(
+              ',',
+              $.literal,
+            ),
+          ),
+          optional(','),
+        ),
+      ),
+      ']',
+    ),
+    relation_object: $ => seq(
+      '{',
+      optional(
+        seq(
+          seq(
+            field('name', $.identifier),
+            ':',
+            field('type', $.identifier),
+          ),
+          repeat(
+            seq(
+              ',',
+              seq(
+                field('name', $.identifier),
+                ':',
+                field('type', $.identifier),
+              ),
+            ),
+          ),
+          optional(','),
+        ),
+      ),
+      '}',
+    ),
+    resource_field: $ => seq(
+      field('name', $.identifier),
+      '=',
+      field('value', choice($.string_array, $.relation_object)),
+      ';',
+    ),
+    resource_rule: $ => seq(
+      field('name', $.string),
+      'if',
+      choice(
+        seq(
+          field('role_or_permission', $.string),
+          optional(
+            seq(
+              'on',
+              field('relation', $.identifier),
+            ),
+          ),
+        ),
+        // TODO: Consider using restricted types as e.g. NOT or matches is not supported
+        $.logical_expression,
+      ),
+      ';',
+    ),
+    resource_definition: $ => seq(
+      choice(
+        'global',
+        seq(
+          choice('resource', 'actor'),
+          field('name', $.identifier),
+          optional(seq('extends', field('supertype', $.identifier))),
+        ),
+      ),
+      '{',
+      repeat(choice($.resource_field, $.resource_rule)),
+      '}',
+    ),
   },
   supertypes: $ => [
     $.definition,

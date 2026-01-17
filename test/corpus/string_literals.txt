@@ -10,7 +10,7 @@ some_fact("this looks like a simple string 123");
   (fact_definition
     name: (identifier)
     parameter: (parameter
-      literal: (string_literal))))
+      literal: (string))))
 
 =============================
 String with escaped sequences
@@ -24,4 +24,18 @@ some_fact("a string with escaped sequences: \n \t \\ \" \\");
   (fact_definition
     name: (identifier)
     parameter: (parameter
-      literal: (string_literal))))
+      literal: (string))))
+
+=============================
+String with keywords
+=============================
+
+some_fact("This and that or something else, resource, actor, if");
+
+---
+
+(source_file
+  (fact_definition
+    name: (identifier)
+    parameter: (parameter
+      literal: (string))))
