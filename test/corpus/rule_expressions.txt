@@ -1,20 +1,20 @@
-================================
-Rule expression - without body
-================================
+=====================================
+Rule expression - without body (fact)
+=====================================
 
 some_fact();
 
 ---
 
 (source_file
-  (rule_definition
+  (fact_definition
     name: (identifier)))
 
 ================================
 Rule expression - zero arguments
 ================================
 
-some_fact(x) if some_other_fact();
+some_rule(x) if some_other_fact();
 
 ---
 
@@ -47,7 +47,7 @@ some_fact(x) if some_other_fact(true);
 Rule expression - boolean (false) argument
 =========================================
 
-some_fact(x) if some_other_fact(false);
+some_rule(x) if some_other_fact(false);
 
 ---
 
@@ -65,7 +65,7 @@ some_fact(x) if some_other_fact(false);
 Rule expression - string argument
 ===================================
 
-some_fact(x) if some_other_fact(x);
+some_rule(x) if some_other_fact(x);
 
 ---
 
@@ -83,7 +83,7 @@ some_fact(x) if some_other_fact(x);
 Rule expression - variable argument 
 ===================================
 
-some_fact(x) if some_other_fact(x);
+some_rule(x) if some_other_fact(x);
 
 ---
 
@@ -101,7 +101,7 @@ some_fact(x) if some_other_fact(x);
 Rule expression - variable argument 
 ===================================
 
-some_fact(x) if some_other_fact(x);
+some_rule(x) if some_other_fact(x);
 
 ---
 
@@ -118,7 +118,7 @@ some_fact(x) if some_other_fact(x);
 Rule expression - variable argument with type 
 =============================================
 
-some_fact(x: String) if some_other_fact(x);
+some_rule(x: String) if some_other_fact(x);
 
 ---
 

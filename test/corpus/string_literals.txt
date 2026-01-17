@@ -7,7 +7,7 @@ some_fact("this looks like a simple string 123");
 ---
 
 (source_file
-  (rule_definition
+  (fact_definition
     name: (identifier)
     parameter: (parameter
       literal: (string_literal))))
@@ -21,7 +21,7 @@ some_fact("a string with escaped sequences: \n \t \\ \" \\");
 ---
 
 (source_file
-  (rule_definition
+  (fact_definition
     name: (identifier)
     parameter: (parameter
       literal: (string_literal))))

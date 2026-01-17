@@ -15,7 +15,12 @@ module.exports = grammar({
   rules: {
     // TODO: add the actual grammar rules
     source_file: $ => repeat($.definition),
-    definition: $ => choice($.rule_definition),
+    definition: $ => choice(
+      $.rule_definition,
+      $.fact_definition,
+      $.fixture_definition,
+      $.test_definition,
+    ),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
@@ -24,7 +29,15 @@ module.exports = grammar({
       '(',
       optional(field('parameter', seq($.parameter, repeat(seq(',', $.parameter))))),
       ')',
-      optional(seq('if', field('expression', $.logical_expression))),
+      'if',
+      field('expression', $.logical_expression),
+      ';',
+    ),
+    fact_definition: $ => seq(
+      field('name', $.identifier),
+      '(',
+      optional(field('parameter', seq($.parameter, repeat(seq(',', $.parameter))))),
+      ')',
       ';',
     ),
     parameter: $ => choice(
@@ -43,7 +56,6 @@ module.exports = grammar({
       '(',
       optional(field('argument', seq($.value, repeat(seq(',', $.value))))),
       ')',
-      optional(seq('if', field('expression', $.logical_expression))),
     ),
     comparison_operator: $ => choice('>', '<', '>=', '<=', '='),
     binary_expression: $ => choice(
@@ -79,6 +91,37 @@ module.exports = grammar({
       repeat(choice('\\\\', '\\"', /[^"]/)),
       '"',
     ),
+    fixture_definition: $ => seq(
+      'test',
+      'fixture',
+      field('name', $.identifier),
+      '{',
+      repeat($.fact_definition),
+      '}',
+    ),
+    fixture_reference: $ => seq('fixture', field("name", $.identifier), ';'),
+
+    test_setup: $ => seq(
+      "setup",
+      '{',
+      repeat(
+        choice(
+          $.fact_definition,
+          $.fixture_reference,
+        ),
+      ),
+      '}',
+    ),
+    assert: $ => seq('assert', $.rule_expression, ';'),
+    assert_not: $ => seq('assert_not', $.rule_expression, ';'),
+    test_definition: $ => seq(
+      "test",
+      field("name", $.string_literal),
+      '{',
+      optional($.test_setup),
+      repeat1(choice($.assert, $.assert_not)),
+      '}',
+    )
   },
   supertypes: $ => [
     $.definition,

@@ -4,7 +4,19 @@
     "named": true,
     "subtypes": [
       {
+        "type": "fact_definition",
+        "named": true
+      },
+      {
+        "type": "fixture_definition",
+        "named": true
+      },
+      {
         "type": "rule_definition",
+        "named": true
+      },
+      {
+        "type": "test_definition",
         "named": true
       }
     ]
@@ -72,6 +84,36 @@
         "named": true
       }
     ]
+  },
+  {
+    "type": "assert",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "rule_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "assert_not",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "rule_expression",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "binary_expression",
@@ -160,6 +202,78 @@
     "fields": {}
   },
   {
+    "type": "fact_definition",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "parameter": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "parameter",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "fixture_definition",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "fact_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fixture_reference",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "negation_expression",
     "named": true,
     "fields": {},
@@ -242,7 +356,7 @@
     "fields": {
       "expression": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "logical_expression",
@@ -294,16 +408,6 @@
           }
         ]
       },
-      "expression": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "logical_expression",
-            "named": true
-          }
-        ]
-      },
       "name": {
         "multiple": false,
         "required": true,
@@ -336,6 +440,59 @@
     "type": "string_literal",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "test_definition",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string_literal",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assert",
+          "named": true
+        },
+        {
+          "type": "assert_not",
+          "named": true
+        },
+        {
+          "type": "test_setup",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "test_setup",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "fact_definition",
+          "named": true
+        },
+        {
+          "type": "fixture_reference",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "\"",
@@ -394,7 +551,19 @@
     "named": false
   },
   {
+    "type": "assert",
+    "named": false
+  },
+  {
+    "type": "assert_not",
+    "named": false
+  },
+  {
     "type": "false",
+    "named": false
+  },
+  {
+    "type": "fixture",
     "named": false
   },
   {
@@ -419,6 +588,14 @@
   },
   {
     "type": "or",
+    "named": false
+  },
+  {
+    "type": "setup",
+    "named": false
+  },
+  {
+    "type": "test",
     "named": false
   },
   {

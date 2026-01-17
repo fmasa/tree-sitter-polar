@@ -2,7 +2,7 @@
 Equals Expression
 ===================
 
-some_fact(x) if x = 1;
+some_rule(x) if x = 1;
 
 ---
 (source_file
@@ -20,7 +20,7 @@ some_fact(x) if x = 1;
 Greater Than Expression
 =======================
 
-some_fact(x) if x > 10;
+some_rule(x) if x > 10;
 
 ---
 
@@ -39,7 +39,7 @@ some_fact(x) if x > 10;
 Greater Than Equals Expression
 ==============================
 
-some_fact(x) if x >= 10;
+some_rule(x) if x >= 10;
 
 ---
 
@@ -58,7 +58,7 @@ some_fact(x) if x >= 10;
 Less Than Equals Expression
 ===========================
 
-some_fact(x) if x <= 10;
+some_rule(x) if x <= 10;
 
 ---
 

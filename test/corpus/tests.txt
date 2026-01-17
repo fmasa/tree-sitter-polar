@@ -1,0 +1,97 @@
+==================
+Test without setup
+==================
+
+test "owner has access" {
+  assert has_access(Repository{"repo"}, User{"owner"});
+  assert_not has_access(Repository{"repo"}, User{"other"});
+}
+
+---
+(source_file
+  (test_definition
+    name: (string_literal)
+    (assert
+      (rule_expression
+        name: (identifier)
+        argument: (object_literal
+          type: (identifier)
+          value: (string_literal))
+        argument: (object_literal
+          type: (identifier)
+          value: (string_literal))))
+    (assert_not
+      (rule_expression
+        name: (identifier)
+        argument: (object_literal
+          type: (identifier)
+          value: (string_literal))
+        argument: (object_literal
+          type: (identifier)
+          value: (string_literal))))))
+
+
+===============
+Test with setup
+===============
+
+test "owner has access" {
+  setup {
+    fixture repository_exists;
+    user_exists(User{"owner"});
+  }
+  assert has_access(Repository{"repo"}, User{"owner"});
+}
+
+---
+(source_file
+  (test_definition
+    name: (string_literal)
+    (test_setup
+      (fixture_reference
+        name: (identifier))
+      (fact_definition
+        name: (identifier)
+        parameter: (parameter
+          literal: (object_literal
+            type: (identifier)
+            value: (string_literal)))))
+    (assert
+      (rule_expression
+        name: (identifier)
+        argument: (object_literal
+          type: (identifier)
+          value: (string_literal))
+        argument: (object_literal
+          type: (identifier)
+          value: (string_literal))))))
+
+==================
+Fixture definition
+==================
+
+test fixture repository_exists {
+  repository_exists(Repository{"repo"});
+  is_owner(Repository{"repo1"}, User{"owner"});
+}
+
+---
+(source_file
+  (fixture_definition
+    name: (identifier)
+    (fact_definition
+      name: (identifier)
+      parameter: (parameter
+        literal: (object_literal
+          type: (identifier)
+          value: (string_literal))))
+    (fact_definition
+      name: (identifier)
+      parameter: (parameter
+        literal: (object_literal
+          type: (identifier)
+          value: (string_literal)))
+      parameter: (parameter
+        literal: (object_literal
+          type: (identifier)
+          value: (string_literal))))))
