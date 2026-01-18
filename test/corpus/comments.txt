@@ -1,0 +1,18 @@
+===================
+Simple comment
+===================
+# Hello
+
+---
+(source_file
+  (comment))
+
+
+===================
+Commented out code
+===================
+# is_owner(User{"user"}, Repository{"repository"})
+
+---
+(source_file
+  (comment))

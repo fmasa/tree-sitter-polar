@@ -9,6 +9,7 @@
       "file-types": [
         "polar"
       ],
+      "highlights": "queries/highlights.scm",
       "injection-regex": "^polar$",
       "class-name": "TreeSitterPolar"
     }

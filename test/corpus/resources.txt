@@ -102,10 +102,12 @@ resource Repository {
     (resource_field
       name: (identifier)
       value: (relation_object
-        name: (identifier)
-        type: (identifier)
-        name: (identifier)
-        type: (identifier)))))
+        (pair
+          name: (identifier)
+          type: (identifier))
+        (pair
+          name: (identifier)
+          type: (identifier))))))
 
 
 ======================================
@@ -124,8 +126,9 @@ resource Repository {
     (resource_field
       name: (identifier)
       value: (relation_object
-        name: (identifier)
-        type: (identifier)))))
+        (pair
+          name: (identifier)
+          type: (identifier))))))
 
 
 =====================

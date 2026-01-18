@@ -12,6 +12,11 @@ module.exports = grammar({
 
   word: $ => $.identifier,
 
+  extras: ($) => [
+    /\s/, // whitespace
+    $.comment,
+  ],
+
   rules: {
     // TODO: add the actual grammar rules
     source_file: $ => repeat($.definition),
@@ -104,6 +109,7 @@ module.exports = grammar({
       repeat(choice('\\\\', '\\"', /[^"]/)),
       '"',
     ),
+    comment: $ => seq("#", /[^\n]*/),
     fixture_definition: $ => seq(
       'test',
       'fixture',
@@ -167,25 +173,17 @@ module.exports = grammar({
       ),
       ']',
     ),
+    pair: $ => seq(
+      field('name', $.identifier),
+      ':',
+      field('type', $.identifier),
+    ),
     relation_object: $ => seq(
       '{',
       optional(
         seq(
-          seq(
-            field('name', $.identifier),
-            ':',
-            field('type', $.identifier),
-          ),
-          repeat(
-            seq(
-              ',',
-              seq(
-                field('name', $.identifier),
-                ':',
-                field('type', $.identifier),
-              ),
-            ),
-          ),
+          $.pair,
+          repeat(seq(',', $.pair)),
           optional(','),
         ),
       ),
