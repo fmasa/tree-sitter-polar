@@ -18,3 +18,19 @@ rule(x) if another_rule(x)
 rule(x) if y matches SomeType and other_rule(x, y);
 #                         ^ type
 #               ^ keyword.operator
+
+test "example" {
+# <- keyword.function
+#     ^ string
+  assert some_rule(x) iff x in [1, 2, 3];
+  # ^ keyword
+  #                    ^ keyword.operator
+  #                       ^ variable
+}
+
+test "example" {
+# <- keyword.function
+#     ^ string
+  assert some_rule(x);
+  # ^ keyword
+}

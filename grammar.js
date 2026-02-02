@@ -71,6 +71,13 @@ module.exports = grammar({
     matches: $ => 'matches',
     not: $ => 'not',
     in: $ => 'in',
+    iff_expression: $ => 
+      seq(
+        'iff',
+        field('variable', $.identifier),
+        field('operator', $.in),
+        field('values', $.literal_array),
+      ),
     binary_expression: $ => choice(
       seq(
         field('variable', $.identifier),
@@ -131,7 +138,11 @@ module.exports = grammar({
       ),
       '}',
     ),
-    assert: $ => seq('assert', $.rule_expression, ';'),
+    assert: $ => seq(
+      'assert',
+      $.rule_expression,
+      optional($.iff_expression),
+    ';'),
     assert_not: $ => seq('assert_not', $.rule_expression, ';'),
     test_definition: $ => seq(
       "test",

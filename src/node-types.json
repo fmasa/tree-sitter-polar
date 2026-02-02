@@ -98,9 +98,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "iff_expression",
+          "named": true
+        },
         {
           "type": "rule_expression",
           "named": true
@@ -290,6 +294,42 @@
     "named": true,
     "fields": {
       "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "iff_expression",
+    "named": true,
+    "fields": {
+      "operator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "in",
+            "named": true
+          }
+        ]
+      },
+      "values": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "literal_array",
+            "named": true
+          }
+        ]
+      },
+      "variable": {
         "multiple": false,
         "required": true,
         "types": [
@@ -839,6 +879,10 @@
   },
   {
     "type": "if",
+    "named": false
+  },
+  {
+    "type": "iff",
     "named": false
   },
   {

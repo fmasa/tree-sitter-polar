@@ -24,6 +24,7 @@
 (and) @keyword.operator
 (or) @keyword.operator
 (in) @keyword.operator
+"iff" @keyword.operator
 
 ; Resources
 "resource" @keyword
@@ -51,6 +52,9 @@
 
 (assert) @keyword
 (assert_not) @keyword
+
+(iff_expression
+  variable: (identifier) @variable)
 
 ; Rules and Facts
 "if" @keyword.conditional
